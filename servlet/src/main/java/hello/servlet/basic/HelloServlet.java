@@ -16,7 +16,7 @@ public class HelloServlet extends HttpServlet {
     // HTTP 요청을 통해 매핑된 URL이 호출되면 서블릿 컨테이너는 service 메서드 호출
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 서블릿 컨테이너(WAS)가 request, response 객체 만들어서 서블릿에 넘겨줌
+        // WAS가 request, response 객체 만들어서 서블릿 객체를 호출하면서 넘겨줌
         System.out.println("HelloServlet.service");
         System.out.println("req = " + req);
         System.out.println("resp = " + resp);
