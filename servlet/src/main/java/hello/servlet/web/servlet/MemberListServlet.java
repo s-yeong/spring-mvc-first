@@ -21,7 +21,7 @@ public class MemberListServlet extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         // 비즈니스 로직
-        List<Member> members = memberRepository.findByAll();
+        List<Member> members = memberRepository.findAll();
 
 
         response.setContentType("text/html");
