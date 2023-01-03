@@ -7,7 +7,7 @@
 <body>
 성공
 <ul>
-    <li>id={member.id}</li> <!-- JSP가 제공하는 표현식 -->
+    <li>id=${member.id}</li> <!-- JSP가 제공하는 표현식 -->
     <li>username=${member.username}</li>
     <li>age=${member.age}</li>
 </ul>
