@@ -15,6 +15,7 @@ public class OldController implements Controller {
     @Override
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         System.out.println("OldController.handleRequest");
-        return null;
+        return new ModelAndView("new-form");
+        // "application.properties"에서 View 추가 안하면 에러 페이지 뜸
     }
 }
