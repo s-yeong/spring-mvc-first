@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -102,7 +103,7 @@ public class BasicItemController {
         return "basic/item";
     }
 
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV5(Item item) {
 
         itemRepository.save(item);
@@ -110,8 +111,18 @@ public class BasicItemController {
         // 모델에 @ModelAttribute로 지정한 객체를 자동으로 넣어줌
 //        model.addAttribute("item", item);
 
-        // 상품 상세에서 사용한 item.html 뷰 템플릿 재활용 (저장 결과 보여주기)
         return "redirect:/basic/items/" + item.getId();
+    }
+
+    @PostMapping("/add")
+    public String addItemV6(Item item, RedirectAttributes redirectAttributes) {
+
+        Item savedItem = itemRepository.save(item);
+
+        redirectAttributes.addAttribute("itemId", savedItem.getId());   // pathVariable 바인딩
+        redirectAttributes.addAttribute("status", true);    // 쿼리 파라미터로 처리
+
+        return "redirect:/basic/items/{itemId}";
     }
 
     // 상품 수정 폼
