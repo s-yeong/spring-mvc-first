@@ -5,10 +5,7 @@ import hello.itemservice.domain.item.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -44,6 +41,68 @@ public class BasicItemController {
     public String addForm() {
         return "basic/addForm";
     }
+
+    // 상품 등록 처리
+    // POST - HTML Form 형식 (메시지 바디에 쿼리 파라미터 형식으로 전달)
+//    @PostMapping("/add")
+    public String addItemV1(@RequestParam String itemName,
+                            @RequestParam int price,
+                            @RequestParam Integer quantity,
+                            Model model) {
+        Item item = new Item();
+        item.setItemName(itemName);
+        item.setPrice(price);
+        item.setQuantity(quantity);
+
+        itemRepository.save(item);
+
+        model.addAttribute("item", item);
+        
+        // 상품 상세에서 사용한 item.html 뷰 템플릿 재활용 (저장 결과 보여주기)
+        return "basic/item";
+    }
+
+    // 상품 등록 처리 @ModelAttribute
+//    @PostMapping("/add")
+    public String addItemV2(@ModelAttribute("item") Item item) {
+
+        itemRepository.save(item);
+
+        // 모델에 @ModelAttribute로 지정한 객체를 자동으로 넣어줌
+//        model.addAttribute("item", item);
+
+        // 상품 상세에서 사용한 item.html 뷰 템플릿 재활용 (저장 결과 보여주기)
+        return "basic/item";
+    }
+
+    // 상품 등록 처리 @ModelAttribute 이름 생략
+    // 이름 생략시 model에 저장된 name은 클래스명 첫글자만 소문자로 등록
+//    @PostMapping("/add")
+    public String addItemV3(@ModelAttribute Item item) {
+
+        itemRepository.save(item);
+
+        // 모델에 @ModelAttribute로 지정한 객체를 자동으로 넣어줌
+//        model.addAttribute("item", item);
+
+        // 상품 상세에서 사용한 item.html 뷰 템플릿 재활용 (저장 결과 보여주기)
+        return "basic/item";
+    }
+
+    // ModelAttribute 전체 생략
+    @PostMapping("/add")
+    public String addItemV4(Item item) {
+
+        itemRepository.save(item);
+
+        // 모델에 @ModelAttribute로 지정한 객체를 자동으로 넣어줌
+//        model.addAttribute("item", item);
+
+        // 상품 상세에서 사용한 item.html 뷰 템플릿 재활용 (저장 결과 보여주기)
+        return "basic/item";
+    }
+
+
 
     /**
      * 테스트용 데이터
