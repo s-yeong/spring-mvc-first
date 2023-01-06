@@ -90,7 +90,7 @@ public class BasicItemController {
     }
 
     // ModelAttribute 전체 생략
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV4(Item item) {
 
         itemRepository.save(item);
@@ -100,6 +100,18 @@ public class BasicItemController {
 
         // 상품 상세에서 사용한 item.html 뷰 템플릿 재활용 (저장 결과 보여주기)
         return "basic/item";
+    }
+
+    @PostMapping("/add")
+    public String addItemV5(Item item) {
+
+        itemRepository.save(item);
+
+        // 모델에 @ModelAttribute로 지정한 객체를 자동으로 넣어줌
+//        model.addAttribute("item", item);
+
+        // 상품 상세에서 사용한 item.html 뷰 템플릿 재활용 (저장 결과 보여주기)
+        return "redirect:/basic/items/" + item.getId();
     }
 
     // 상품 수정 폼
